@@ -55,8 +55,26 @@ export default {
           title: this.$tr('iqreable.cms.updatePost'),
         },
         delete: true,
-        formLeft: {
+        formLeft: {          
           id: {value: ''},
+          banner: {
+          type: 'banner',
+          props: {
+            color: 'info',
+            icon: 'fas fa-exclamation-triangle',
+            message: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab ad aperiam cupiditate deleniti dolore, dolores explicabo, impedit labore molestiae optio pariatur placeat quis similique soluta unde? Expedita nesciunt obcaecati quia!",
+            actions: [
+              {
+                props: {
+                  label: this.$tr('isite.cms.label.home')
+                },
+                action: () => {
+                  this.$helper.openExternalURL(this.$store.state.qsiteApp.baseUrl, true)
+                }
+              }
+            ]
+          }
+        },
           title: {
             value: '',
             type: 'input',
@@ -85,9 +103,6 @@ export default {
             isTranslatable: false,
             props: {
               label: `${this.$tr('isite.cms.form.content')}*`,
-              rules: [
-                val => !!val || this.$tr('isite.cms.message.fieldRequired')
-              ],
             },
           },
         },
