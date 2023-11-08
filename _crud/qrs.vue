@@ -62,12 +62,20 @@ export default {
               name: 'id', label: this.$tr('isite.cms.form.id'),
               field: 'id',
               sortable: true,
+              action: (item) => {
+                this.modal.item = item
+                this.modal.show = true
+              }
             },
             {
               name: 'title', label: this.$tr('isite.cms.form.title'),
               field: 'title',
               align: 'left',
               sortable: true,
+              action: (item) => {
+                this.modal.item = item
+                this.modal.show = true
+              }
             },
             {
               name: 'content', label: this.$tr('isite.cms.form.content'),
