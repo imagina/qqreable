@@ -6,7 +6,7 @@
   >
     <div class="row">
       <div class="col-12 text-center">
-        <q-card class="row q-pa-md">
+        <q-card class="row q-pa-md q-ma-sm">
           <div class="col-5">
             <div style="width: 160px; height: 160px">
               <avatar-image
@@ -43,7 +43,8 @@ export default {
       modal: {
         show: false,
         item: false
-      }
+      },
+      bannerMsg: '<p>Los prefijos facilitan la definición del tipo de contenido que contiene cada código QR.  Aquí hay ejemplos comunes que puedes usar al ingresar tu contenido: <br><br><li>Dirección web:  ingresa <b>http://</b> o <b>https://</b> seguido de la direccion web. Ejemplo: <b>https://www.imaginacolombia.com/</b></li><li>Correo electrónico:  ingresa "<b>mailto:</b>" seguido de la direccion de correo.  Ejemplo: <b>mailto:support@imaginacolombia.com</b></li><li>Número de teléfono: Ingresa "<b>tel:</b>" seguido del numero telefonico.  Ejemplo: <b>tel:555-555-5555</b></li><li>Mensaje de texto (SMS) con mensaje y número predefinidos:   Utiliza "<b>sms:</b>"  Combina número "<b>:</b>" mensaje.   Ejemplo: <b>sms:555-555-5555:yo soy el mensaje</b></li><li>Ubicacion geográfica: Utiliza "<b>geo:</b>".  Ejemplo: <b>geo:-78.400364,-85.916993</b></li><li>Tarjeta MeCard: Emplea "<b>mecard:</b>".  Ejemplo: <b>MECARD:Simple, Software;Some Address, Somewhere, 20430;TEL:555-555-5555;EMAIL:support@imaginacolombia.com</b></li>'
     }
   },
   computed: {
@@ -62,20 +63,14 @@ export default {
               name: 'id', label: this.$tr('isite.cms.form.id'),
               field: 'id',
               sortable: true,
-              action: (item) => {
-                this.modal.item = item
-                this.modal.show = true
-              }
+              action: (item) => this.showModal(item)
             },
             {
               name: 'title', label: this.$tr('isite.cms.form.title'),
               field: 'title',
               align: 'left',
               sortable: true,
-              action: (item) => {
-                this.modal.item = item
-                this.modal.show = true
-              }
+              action: (item) => this.showModal(item)
             },
             {
               name: 'content', label: this.$tr('isite.cms.form.content'),
@@ -111,35 +106,14 @@ export default {
               icon: 'fas fa-eye',
               color: 'info',
               tooltip: this.$tr('isite.cms.label.view'),
-              action: (item) => {
-                this.modal.item = item
-                this.modal.show = true
-              }
+              action: (item) => this.showModal(item)
             }
           ]
         },
         update: false,
         delete: true,
         formLeft: {          
-          id: {value: ''},
-          banner: {
-          type: 'banner',
-          props: {
-            color: 'info',
-            icon: 'fas fa-exclamation-triangle',
-            message: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab ad aperiam cupiditate deleniti dolore, dolores explicabo, impedit labore molestiae optio pariatur placeat quis similique soluta unde? Expedita nesciunt obcaecati quia!",
-            actions: [
-              {
-                props: {
-                  label: this.$tr('isite.cms.label.home')
-                },
-                action: () => {
-                  this.$helper.openExternalURL(this.$store.state.qsiteApp.baseUrl, true)
-                }
-              }
-            ]
-          }
-        },
+          id: {value: ''},          
           title: {
             value: '',
             type: 'input',
@@ -151,6 +125,14 @@ export default {
               ],
             },
           },
+          banner: {
+            type: 'banner',
+            props: {
+              color: 'info',
+              icon: 'fas fa-exclamation-triangle',
+              message: this.bannerMsg,
+            }
+          },
           content: {
             value: '',
             type: 'input',
@@ -158,7 +140,7 @@ export default {
             props: {
               label: `${this.$tr('isite.cms.form.content')}*`,
             },
-          },
+          },          
           zone: {
             value: 'mainqr',
             type: 'input',
@@ -193,6 +175,10 @@ export default {
         document.body.removeChild(downloadLink);
       }, 100);
     },
+    showModal(item){
+      this.modal.item = item
+      this.modal.show = true
+    }
   }
 }
 </script>
