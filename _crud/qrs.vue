@@ -1,7 +1,7 @@
 <template>
   <master-modal
     v-model="modal.show"
-    :title="modal.item.title"
+    :title="modal.item.title || $tr('iqreable.cms.form.title')"
     width="600px"
   >
     <div class="row">
@@ -23,13 +23,14 @@
           </div>
         </q-card>
         <q-btn
-          :label="$tr('isite.cms.label.download')"
+          :label="$tr('iqreable.cms.downloadQrcode')"
           @click="downloadFile(modal.item)"
           icon="fa-light fa-download"
           no-caps
           rounded
           color="primary"
           class="q-my-md"
+          v-if="modal.item.base64"
         />
       </div>
     </div>
@@ -43,8 +44,7 @@ export default {
       modal: {
         show: false,
         item: false
-      },
-      bannerMsg: '<p>Los prefijos facilitan la definición del tipo de contenido que contiene cada código QR.  Aquí hay ejemplos comunes que puedes usar al ingresar tu contenido: <br><br><li>Dirección web:  ingresa <b>http://</b> o <b>https://</b> seguido de la direccion web. Ejemplo: <b>https://www.imaginacolombia.com/</b></li><li>Correo electrónico:  ingresa "<b>mailto:</b>" seguido de la direccion de correo.  Ejemplo: <b>mailto:support@imaginacolombia.com</b></li><li>Número de teléfono: Ingresa "<b>tel:</b>" seguido del numero telefonico.  Ejemplo: <b>tel:555-555-5555</b></li><li>Mensaje de texto (SMS) con mensaje y número predefinidos:   Utiliza "<b>sms:</b>"  Combina número "<b>:</b>" mensaje.   Ejemplo: <b>sms:555-555-5555:yo soy el mensaje</b></li><li>Ubicacion geográfica: Utiliza "<b>geo:</b>".  Ejemplo: <b>geo:-78.400364,-85.916993</b></li><li>Tarjeta MeCard: Emplea "<b>mecard:</b>".  Ejemplo: <b>MECARD:Simple, Software;Some Address, Somewhere, 20430;TEL:555-555-5555;EMAIL:support@imaginacolombia.com</b></li>'
+      }
     }
   },
   computed: {
@@ -55,43 +55,43 @@ export default {
         apiRoute: 'apiRoutes.qqreable.qrs',
         permission: 'iblog.posts',
         create: {
-          title: this.$tr('iqreable.cms.newQrCode'),
+          title: this.$tr('iqreable.cms.newQrcode'),
         },
         read: {
           columns: [
             {
-              name: 'id', label: this.$tr('isite.cms.form.id'),
+              name: 'id', label: this.$tr('iqreable.cms.form.id'),
               field: 'id',
               sortable: true,
               action: (item) => this.showModal(item)
             },
             {
-              name: 'title', label: this.$tr('isite.cms.form.title'),
+              name: 'title', label: this.$tr('iqreable.cms.form.title'),
               field: 'title',
               align: 'left',
               sortable: true,
               action: (item) => this.showModal(item)
             },
             {
-              name: 'content', label: this.$tr('isite.cms.form.content'),
+              name: 'content', label: this.$tr('iqreable.cms.form.content'),
               field: 'content',
               align: 'left',
               sortable: true,
             },
             {
-              name: 'entity_type', label: this.$tr('isite.cms.form.entity_type'),
+              name: 'entity_type', label: this.$tr('iqreable.cms.form.entityType'),
               field: 'entity_type',
               align: 'left',
               sortable: true,
             },
             {
-              name: 'entity_id', label: this.$tr('isite.cms.form.entity_id'),
+              name: 'entity_id', label: this.$tr('iqreable.cms.form.entityId'),
               field: 'entity_id',
               align: 'left',
               sortable: true,
             },
             {
-              name: 'zone', label: this.$tr('isite.cms.form.zone'),
+              name: 'zone', label: this.$tr('iqreable.cms.form.zone'),
               field: 'zone',
               align: 'left',
               sortable: true,
@@ -119,7 +119,7 @@ export default {
             type: 'input',
             isTranslatable: true,
             props: {
-              label: `${this.$tr('isite.cms.form.title')}*`,
+              label: `${this.$tr('iqreable.cms.form.title')}*`,
               rules: [
                 val => !!val || this.$tr('isite.cms.message.fieldRequired')
               ],
@@ -130,7 +130,7 @@ export default {
             props: {
               color: 'info',
               icon: 'fas fa-exclamation-triangle',
-              message: this.bannerMsg,
+              message: `${this.$tr('iqreable.cms.form.bannerInfo')}`
             }
           },
           content: {
@@ -138,7 +138,7 @@ export default {
             type: 'input',
             isTranslatable: false,
             props: {
-              label: `${this.$tr('isite.cms.form.content')}*`,
+              label: `${this.$tr('iqreable.cms.form.content')}*`,
             },
           },          
           zone: {
@@ -146,9 +146,9 @@ export default {
             type: 'input',
             isTranslatable: false,
             props: {
-              label: `${this.$tr('isite.cms.form.zone')}*`,
+              label: `${this.$tr('iqreable.cms.form.zone')}*`,
               rules: [
-                val => !!val || this.$tr('isite.cms.message.fieldRequired')
+                val => !!val || this.$tr('iqreable.cms.message.fieldRequired')
               ],
               vIf: false,
             },
