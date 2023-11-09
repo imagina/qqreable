@@ -1,6 +1,6 @@
 export default {
   qrs: {
-    permission: 'iblog.posts.manage',
+    permission: 'iqreable.qrs.manage',
     activated: true,
     authenticated: true,
     path: '/qreable/qrs',
