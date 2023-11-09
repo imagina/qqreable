@@ -2,32 +2,40 @@
   <master-modal
     v-model="modal.show"
     :title="modal.item.title || $tr('iqreable.cms.form.title')"
-    width="600px"
+    customPosition
   >
     <div class="row">
       <div class="col-12 text-center">
-        <q-card class="row q-pa-md q-ma-sm">
-          <div class="col-5">
-            <div style="width: 160px; height: 160px">
-              <avatar-image
-                size="160px"
-                :src="modal.item.base64"
-                style="image-rendering: pixelated;"
-              />
-            </div>
+        <div class="row q-pa-xs q-ma-xs">
+          <div class="col-12">
+            <img
+              style="max-width: 200px; height: 200px; image-rendering: pixelated; display: inline-block;"
+              :src="modal.item.base64"
+              class="q-ma-sm"
+            />
           </div>
-          <div class="col-7">
-            <p class="text-left">
+          <div class="col-12 q-col-gutter-sm text-center q-mt-xs text-body1">
+            <p>
+              <b>{{ $tr('iqreable.cms.form.title')}}:</b> {{ modal.item.title}}
+            </p>
+            <p>
+              <b>{{ $tr('iqreable.cms.form.zone')}}:</b> {{ modal.item.zone}}
+            </p>
+            <p>
+              <b>{{ $tr('iqreable.cms.form.content')}}:</b>
+            </p>
+            <p>
               {{ modal.item.content}}
             </p>
           </div>
-        </q-card>
+        </div>
         <q-btn
-          :label="$tr('iqreable.cms.downloadQrcode')"
+          :label="$tr('iqreable.cms.label.download')"
           @click="downloadFile(modal.item)"
           icon="fa-light fa-download"
           no-caps
           rounded
+          unelevated
           color="primary"
           class="q-my-md"
           v-if="modal.item.base64"
@@ -55,7 +63,7 @@ export default {
         apiRoute: 'apiRoutes.qqreable.qrs',
         permission: 'iblog.posts',
         create: {
-          title: this.$tr('iqreable.cms.newQrcode'),
+          title: this.$tr('iqreable.cms.label.new'),
         },
         read: {
           columns: [
@@ -63,6 +71,13 @@ export default {
               name: 'id', label: this.$tr('iqreable.cms.form.id'),
               field: 'id',
               sortable: true,
+              action: (item) => this.showModal(item)
+            },
+            {
+              name: 'qr', label: 'QR',
+              align: 'left',
+              format: val => '<i class="fa-light fa-qrcode">',
+              tooltip: this.$tr('iqreable.cms.label.view'),
               action: (item) => this.showModal(item)
             },
             {
@@ -103,17 +118,25 @@ export default {
           actions: [
             {
               name: 'viewCode',
-              icon: 'fas fa-eye',
+              icon: 'fa-light fa-qrcode',
               color: 'info',
-              tooltip: this.$tr('isite.cms.label.view'),
+              tooltip: this.$tr('iqreable.cms.label.view'),
               action: (item) => this.showModal(item)
             }
           ]
         },
         update: false,
         delete: true,
-        formLeft: {          
-          id: {value: ''},          
+        formLeft: {
+          id: {value: ''},
+          banner: {
+            type: 'banner',
+            props: {
+              color: 'info',
+              icon: 'fas fa-exclamation-triangle',
+              message: `${this.$tr('iqreable.cms.form.bannerInfo')}`
+            }
+          },
           title: {
             value: '',
             type: 'input',
@@ -124,14 +147,6 @@ export default {
                 val => !!val || this.$tr('isite.cms.message.fieldRequired')
               ],
             },
-          },
-          banner: {
-            type: 'banner',
-            props: {
-              color: 'info',
-              icon: 'fas fa-exclamation-triangle',
-              message: `${this.$tr('iqreable.cms.form.bannerInfo')}`
-            }
           },
           content: {
             value: '',
@@ -150,7 +165,6 @@ export default {
               rules: [
                 val => !!val || this.$tr('iqreable.cms.message.fieldRequired')
               ],
-              vIf: false,
             },
           }
         },
