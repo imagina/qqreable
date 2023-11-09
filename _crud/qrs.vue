@@ -61,7 +61,7 @@ export default {
         crudId: this.crudId,
         entityName: config("main.qqreable.entityNames.qrs"),
         apiRoute: 'apiRoutes.qqreable.qrs',
-        permission: 'iblog.posts',
+        permission: 'iqreable.qrs',
         create: {
           title: this.$tr('iqreable.cms.label.new'),
         },
