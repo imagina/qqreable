@@ -1,45 +1,35 @@
 <template>
   <master-modal
-    v-model="modal.show"
-    :title="modal.item.title || $tr('iqreable.cms.form.title')"
-    customPosition
+      v-model="modal.show"
+      :title="modal.item.title || $tr('iqreable.cms.form.title')"
+      :actions="[{
+      props : {
+        label : $tr('iqreable.cms.label.download'),
+        color: 'primary',
+        outlined: true,
+        icon : 'fa-light fa-download'
+      },
+      action: () => downloadFile(modal.item)
+    }]"
   >
-    <div class="row">
+    <div class="row q-py-md">
       <div class="col-12 text-center">
-        <div class="row q-pa-xs q-ma-xs">
-          <div class="col-12">
-            <img
-              style="max-width: 200px; height: 200px; image-rendering: pixelated; display: inline-block;"
-              :src="modal.item.base64"
-              class="q-ma-sm"
-            />
-          </div>
-          <div class="col-12 q-col-gutter-sm text-center q-mt-xs text-body1">
-            <p>
-              <b>{{ $tr('iqreable.cms.form.title')}}:</b> {{ modal.item.title}}
-            </p>
-            <p>
-              <b>{{ $tr('iqreable.cms.form.zone')}}:</b> {{ modal.item.zone}}
-            </p>
-            <p>
-              <b>{{ $tr('iqreable.cms.form.content')}}:</b>
-            </p>
-            <p>
-              {{ modal.item.content}}
-            </p>
-          </div>
-        </div>
-        <q-btn
-          :label="$tr('iqreable.cms.label.download')"
-          @click="downloadFile(modal.item)"
-          icon="fa-light fa-download"
-          no-caps
-          rounded
-          unelevated
-          color="primary"
-          class="q-my-md"
-          v-if="modal.item.base64"
+        <img
+            style="max-width: 200px; height: 200px; image-rendering: pixelated; display: inline-block;"
+            :src="modal.item.base64"
+            class="q-ma-sm q-mb-lg"
         />
+      </div>
+      <div class="col-12 q-col-gutter-sm text-left" style="word-wrap: break-word">
+        <p>
+          <b class="text-blue-grey">{{ $tr('iqreable.cms.form.title') }}:</b> {{ modal.item.title }}
+        </p>
+        <p>
+          <b class="text-blue-grey">{{ $tr('iqreable.cms.form.zone') }}:</b> {{ modal.item.zone }}
+        </p>
+        <p>
+          <b class="text-blue-grey">{{ $tr('iqreable.cms.form.content') }}:</b> {{ modal.item.content }}
+        </p>
       </div>
     </div>
   </master-modal>
@@ -76,7 +66,7 @@ export default {
             {
               name: 'qr', label: 'QR',
               align: 'left',
-              format: val => '<i class="fa-light fa-qrcode">',
+              format: val => '<i class="fa-light fa-qrcode" style="font-size: 20px">',
               tooltip: this.$tr('iqreable.cms.label.view'),
               action: (item) => this.showModal(item)
             },
@@ -94,6 +84,12 @@ export default {
               sortable: true,
             },
             {
+              name: 'zone', label: this.$tr('iqreable.cms.form.zone'),
+              field: 'zone',
+              align: 'left',
+              sortable: true,
+            },
+            {
               name: 'entity_type', label: this.$tr('iqreable.cms.form.entityType'),
               field: 'entity_type',
               align: 'left',
@@ -102,12 +98,6 @@ export default {
             {
               name: 'entity_id', label: this.$tr('iqreable.cms.form.entityId'),
               field: 'entity_id',
-              align: 'left',
-              sortable: true,
-            },
-            {
-              name: 'zone', label: this.$tr('iqreable.cms.form.zone'),
-              field: 'zone',
               align: 'left',
               sortable: true,
             },
@@ -155,7 +145,7 @@ export default {
             props: {
               label: `${this.$tr('iqreable.cms.form.content')}*`,
             },
-          },          
+          },
           zone: {
             value: 'mainqr',
             type: 'input',
@@ -189,7 +179,7 @@ export default {
         document.body.removeChild(downloadLink);
       }, 100);
     },
-    showModal(item){
+    showModal(item) {
       this.modal.item = item
       this.modal.show = true
     }
