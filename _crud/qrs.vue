@@ -115,7 +115,7 @@ export default {
             }
           ]
         },
-        update: false,
+        update: true,
         delete: true,
         formLeft: {
           id: {value: ''},
