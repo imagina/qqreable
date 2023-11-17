@@ -37,8 +37,6 @@
   </master-modal>
 </template>
 <script>
-  import helper from "@imagina/qsite/_plugins/helper";
-
   export default {
     props: {},
     mounted() {},
@@ -77,13 +75,18 @@
 
       //Generate new QR
       generate(contentQR) {
+        //Get content of QR
         const {title, zone, content, entity_type, entity_id} = contentQR;
+        // Verify if the length is major than 2
         const verifyData = [title, zone, content].every(i => i?.length > 2)
 
         if(verifyData) {
+          // Get all languages of the app
           const languages = this.$store.state?.qsiteApp?.selectedLocales
+          //Capitalize module and entity
           const module = this.$helper.toCapitalize(entity_type.module)
           const entity = this.$helper.toCapitalize(entity_type.entity)
+          //Create the correct entity_type
           const relationEntity = `Modules\\${module}\\Entities\\${entity}`;
 
           const params = {
