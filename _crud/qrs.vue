@@ -1,41 +1,11 @@
 <template>
-  <master-modal
-      v-model="modal.show"
-      :title="modal.item.title || $tr('iqreable.cms.form.title')"
-      :actions="[{
-      props : {
-        label : $tr('iqreable.cms.label.download'),
-        color: 'primary',
-        outlined: true,
-        icon : 'fa-light fa-download'
-      },
-      action: () => downloadFile(modal.item)
-    }]"
-  >
-    <div class="row q-py-md">
-      <div class="col-12 text-center">
-        <img
-            style="max-width: 200px; height: 200px; image-rendering: pixelated; display: inline-block;"
-            :src="modal.item.base64"
-            class="q-ma-sm q-mb-lg"
-        />
-      </div>
-      <div class="col-12 q-col-gutter-sm text-left" style="word-wrap: break-word">
-        <p>
-          <b class="text-blue-grey">{{ $tr('iqreable.cms.form.title') }}:</b> {{ modal.item.title }}
-        </p>
-        <p>
-          <b class="text-blue-grey">{{ $tr('iqreable.cms.form.zone') }}:</b> {{ modal.item.zone }}
-        </p>
-        <p>
-          <b class="text-blue-grey">{{ $tr('iqreable.cms.form.content') }}:</b> {{ modal.item.content }}
-        </p>
-      </div>
-    </div>
-  </master-modal>
+  <qreable ref="qreableComponent" />
 </template>
 <script>
+import qreable from "@imagina/qqreable/_components/qreable.vue"
+
 export default {
+  components: {qreable},
   data() {
     return {
       crudId: this.$uid(),
@@ -68,7 +38,7 @@ export default {
               align: 'left',
               format: val => '<i class="fa-light fa-qrcode" style="font-size: 20px">',
               tooltip: this.$tr('iqreable.cms.label.view'),
-              action: (item) => this.showModal(item)
+              action: (item) => this.$refs.qreableComponent.show(item)
             },
             {
               name: 'title', label: this.$tr('iqreable.cms.form.title'),
@@ -115,7 +85,9 @@ export default {
             }
           ]
         },
-        update: true,
+        update: {
+          title: this.$tr('iqreable.cms.label.update'),
+        },
         delete: true,
         formLeft: {
           id: {value: ''},
