@@ -8,11 +8,7 @@ export default {
   components: {qreable},
   data() {
     return {
-      crudId: this.$uid(),
-      modal: {
-        show: false,
-        item: false
-      }
+      crudId: this.$uid()
     }
   },
   computed: {
@@ -30,8 +26,7 @@ export default {
             {
               name: 'id', label: this.$tr('iqreable.cms.form.id'),
               field: 'id',
-              sortable: true,
-              action: (item) => this.showModal(item)
+              sortable: true
             },
             {
               name: 'qr', label: 'QR',
@@ -45,7 +40,7 @@ export default {
               field: 'title',
               align: 'left',
               sortable: true,
-              action: (item) => this.showModal(item)
+              action: (item) => this.$refs.qreableComponent.show(item)
             },
             {
               name: 'content', label: this.$tr('iqreable.cms.form.content'),
@@ -81,7 +76,7 @@ export default {
               icon: 'fa-light fa-qrcode',
               color: 'info',
               tooltip: this.$tr('iqreable.cms.label.view'),
-              action: (item) => this.showModal(item)
+              action: (item) => this.$refs.qreableComponent.show(item)
             }
           ]
         },
@@ -137,24 +132,6 @@ export default {
       return this.$store.state.qcrudComponent.component[this.crudId] || {}
     }
   },
-  methods: {
-    downloadFile(file) {
-      const fileUrl = file.base64;
-      const fileName = file.title;
-      const downloadLink = document.createElement('a');
-      downloadLink.href = fileUrl;
-      downloadLink.download = fileName;
-      downloadLink.target = '_blank';
-      document.body.appendChild(downloadLink);
-      downloadLink.click();
-      setTimeout(() => {
-        document.body.removeChild(downloadLink);
-      }, 100);
-    },
-    showModal(item) {
-      this.modal.item = item
-      this.modal.show = true
-    }
-  }
+  methods: {}
 }
 </script>
