@@ -39,8 +39,7 @@ export default {
               name: 'title', label: this.$tr('iqreable.cms.form.title'),
               field: 'title',
               align: 'left',
-              sortable: true,
-              action: (item) => this.$refs.qreableComponent.show(item)
+              sortable: true
             },
             {
               name: 'content', label: this.$tr('iqreable.cms.form.content'),
@@ -69,15 +68,6 @@ export default {
             {
               name: 'actions', label: this.$tr('isite.cms.form.actions'), align: 'center'
             },
-          ],
-          actions: [
-            {
-              name: 'viewCode',
-              icon: 'fa-light fa-qrcode',
-              color: 'info',
-              tooltip: this.$tr('iqreable.cms.label.view'),
-              action: (item) => this.$refs.qreableComponent.show(item)
-            }
           ]
         },
         update: {
