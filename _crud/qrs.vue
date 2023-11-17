@@ -54,14 +54,14 @@ export default {
               sortable: true,
             },
             {
-              name: 'entity_type', label: this.$tr('iqreable.cms.form.entityType'),
-              field: 'entity_type',
+              name: 'entityType', label: this.$tr('iqreable.cms.form.entityType'),
+              field: 'entityType',
               align: 'left',
               sortable: true,
             },
             {
-              name: 'entity_id', label: this.$tr('iqreable.cms.form.entityId'),
-              field: 'entity_id',
+              name: 'entityId', label: this.$tr('iqreable.cms.form.entityId'),
+              field: 'entityId',
               align: 'left',
               sortable: true,
             },
@@ -72,6 +72,23 @@ export default {
         },
         update: {
           title: this.$tr('iqreable.cms.label.update'),
+          customFormProps: {
+            zone: {
+              props: {
+                readonly: true
+              }
+            },
+            entityType: {
+              props: {
+                readonly: true
+              }
+            },
+            entityId: {
+              props: {
+                readonly: true
+              }
+            }
+          }
         },
         delete: true,
         formLeft: {
@@ -112,6 +129,22 @@ export default {
               rules: [
                 val => !!val || this.$tr('iqreable.cms.message.fieldRequired')
               ],
+            },
+          },
+          entityType: {
+            value: '',
+            type: 'input',
+            isTranslatable: false,
+            props: {
+              label: this.$tr('iqreable.cms.form.entityType')
+            },
+          },
+          entityId: {
+            value: '',
+            type: 'input',
+            isTranslatable: false,
+            props: {
+              label: this.$tr('iqreable.cms.form.entityId'),
             },
           }
         },
