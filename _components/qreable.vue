@@ -3,15 +3,7 @@
       v-model="showModal"
       :title="modalTitle"
       :loading="loading"
-      :actions="[{
-        props : {
-          label : $tr('iqreable.cms.label.download'),
-          color: 'primary',
-          outlined: true,
-          icon : 'fa-light fa-download'
-        },
-        action: () => downloadFile(props)
-    }]"
+      :actions="masterActions"
   >
     <div class="row q-py-md">
       <div class="col-12 text-center">
@@ -45,6 +37,26 @@
         loading: false,
         props: {},
         showModal: false,
+        masterActions: [
+          {
+            props : {
+              label : this.$tr('isite.cms.label.copy'),
+              color: 'primary',
+              outlined: true,
+              icon : 'fa-light fa-copy'
+            },
+            action: () => this.$helper.copyBase64ToClipboard(this.props.base64)
+          },
+          {
+            props: {
+              label: this.$tr('isite.cms.label.download'),
+              color: 'primary',
+              outlined: true,
+              icon: 'fa-light fa-download'
+            },
+            action: () => this.downloadFile(this.props)
+          },
+        ],
       }
     },
     computed:{
