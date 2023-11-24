@@ -56,7 +56,7 @@
         masterActions: [
           {
             props : {
-              label : this.$tr('isite.cms.label.copy'),
+              label : `${this.$tr('isite.cms.label.copy')} QR`,
               color: 'primary',
               outlined: true,
               icon : 'fa-light fa-copy'
