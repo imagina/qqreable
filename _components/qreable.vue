@@ -5,25 +5,41 @@
       :loading="loading"
       :actions="masterActions"
   >
-    <div class="row q-py-md">
+    <div class="row">
+      <!--Title-->
+      <div class="col-12 text-center q-mb-md">
+        <h5 class="text-h5 text-bold">{{ $tr('iqreable.cms.label.openMobile') }}</h5>
+      </div>
+
       <div class="col-12 text-center">
         <img
             style="max-width: 200px; height: 200px; image-rendering: pixelated; display: inline-block;"
             :src="props.base64"
             class="q-ma-sm q-mb-lg"
         />
-    </div>
-      <div class="col-12 q-col-gutter-sm text-left" style="word-wrap: break-word">
-        <p>
-          <b class="text-blue-grey">{{ $tr('iqreable.cms.form.title') }}:</b> {{ props.title }}
-        </p>
-        <p>
-          <b class="text-blue-grey">{{ $tr('iqreable.cms.form.zone') }}:</b> {{ props.zone }}
-        </p>
-        <p>
-          <b class="text-blue-grey">{{ $tr('iqreable.cms.form.content') }}:</b> {{ props.content }}
-        </p>
       </div>
+
+      <!--description-->
+      <div class="col-12 text-center q-mb-md">
+        <p class="text-bold">{{ $tr('iqreable.cms.label.scanQrCodeWithCamera') }}</p>
+      </div>
+
+      <div class="col-12 text-center">
+        <q-btn
+            :label="$trp('iqreable.cms.label.openNewTab')"
+            @click="$helper.openExternalURL(this.props.content, true)"
+            unelevated
+            rounded
+            no-caps
+            outline
+            color="blue-grey"
+        />
+      </div>
+
+      <div class="col-12 q-mt-md">
+        <dynamic-field :field="dinamycConfig"/>
+      </div>
+
     </div>
 
   </master-modal>
@@ -40,7 +56,7 @@
         masterActions: [
           {
             props : {
-              label : this.$tr('isite.cms.label.copy'),
+              label : `${this.$tr('isite.cms.label.copy')} QR`,
               color: 'primary',
               outlined: true,
               icon : 'fa-light fa-copy'
@@ -63,6 +79,15 @@
       modalTitle() {
         //Get Title of the page
         return this.props.title || this.$tr('iqreable.cms.form.title')
+      },
+      dinamycConfig() {
+        return {
+          value: this.props.content,
+          type: 'copy',
+          props: {
+            label: this.$trp('iqreable.cms.form.content')
+          }
+        }
       },
     },
     methods: {
