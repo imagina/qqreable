@@ -85,7 +85,7 @@
           value: this.props.content,
           type: 'copy',
           props: {
-            label: this.$trp('isite.cms.label.copy')
+            label: this.$trp('iqreable.cms.form.content')
           }
         }
       },
