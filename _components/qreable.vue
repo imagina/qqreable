@@ -132,6 +132,7 @@
           this.$crud.create('apiRoutes.qqreable.qrs', params)
               .then(response => {
                 this.$emit('created')
+                this.show(response.data)
                 this.$alert.info({message: this.$tr('isite.cms.message.recordCreated') })
               })
               .catch(error => {
