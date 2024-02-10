@@ -2,7 +2,7 @@
   <qreable ref="qreableComponent" />
 </template>
 <script>
-import qreable from "@imagina/qqreable/_components/qreable.vue"
+import qreable from "modules/qqreable/_components/qreable.vue"
 
 export default {
   components: {qreable},
