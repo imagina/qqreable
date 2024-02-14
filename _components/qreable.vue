@@ -47,6 +47,7 @@
 <script>
   export default {
     props: {},
+    emits: ['created'],
     mounted() {},
     data() {
       return {
@@ -136,7 +137,6 @@
                 this.$alert.info({message: this.$tr('isite.cms.message.recordCreated') })
               })
               .catch(error => {
-                this.$emit('created')
                 this.$alert.error({message: this.$tr('isite.cms.message.recordNoCreated') })
               })
         }
