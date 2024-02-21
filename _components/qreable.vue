@@ -48,7 +48,6 @@
   export default {
     props: {},
     emits: ['created'],
-    mounted() {},
     data() {
       return {
         loading: false,
