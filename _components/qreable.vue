@@ -14,7 +14,7 @@
       <div class="col-12 text-center">
         <img
             style="max-width: 200px; height: 200px; image-rendering: pixelated; display: inline-block;"
-            :src="props.base64"
+            :src="qrInfo.base64"
             class="q-ma-sm q-mb-lg"
         />
       </div>
@@ -27,7 +27,7 @@
       <div class="col-12 text-center">
         <q-btn
             :label="$trp('iqreable.cms.label.openNewTab')"
-            @click="$helper.openExternalURL(this.props.content, true)"
+            @click="$helper.openExternalURL(qrInfo.content, true)"
             unelevated
             rounded
             no-caps
@@ -51,7 +51,7 @@
     data() {
       return {
         loading: false,
-        props: {},
+        qrInfo: {},
         showModal: false,
         masterActions: [
           {
@@ -61,7 +61,7 @@
               outlined: true,
               icon : 'fa-light fa-copy'
             },
-            action: () => this.$helper.copyBase64ToClipboard(this.props.base64)
+            action: () => this.$helper.copyBase64ToClipboard(this.qrInfo.base64)
           },
           {
             props: {
@@ -70,7 +70,7 @@
               outlined: true,
               icon: 'fa-light fa-download'
             },
-            action: () => this.downloadFile(this.props)
+            action: () => this.downloadFile(this.qrInfo)
           },
         ],
       }
@@ -78,11 +78,11 @@
     computed:{
       modalTitle() {
         //Get Title of the page
-        return this.props.title || this.$tr('iqreable.cms.form.title')
+        return this.qrInfo.title || this.$tr('iqreable.cms.form.title')
       },
       dinamycConfig() {
         return {
-          value: this.props.content,
+          value: this.qrInfo.content,
           type: 'copy',
           props: {
             label: this.$trp('iqreable.cms.form.content')
@@ -106,7 +106,7 @@
       },
       //Show modal
       show(qr) {
-        this.props = qr
+        this.qrInfo = qr
         this.showModal = true
       },
 
